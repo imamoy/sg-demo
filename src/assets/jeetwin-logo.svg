@@ -1,0 +1,52 @@
+<svg width="384" height="170" viewBox="0 0 384 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M32 82L98 82L118 18L139 82L360 82"
+    stroke="#F2B632"
+    stroke-width="10"
+    stroke-linecap="square"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M30 82L95 127L71 126L57 157L70 104L24 72"
+    stroke="#F2B632"
+    stroke-width="10"
+    stroke-linecap="square"
+    stroke-linejoin="round"
+  />
+  <path d="M132 153H257" stroke="#F5F5F5" stroke-width="10" stroke-linecap="square" />
+  <path d="M258 153H356" stroke="#F2B632" stroke-width="10" stroke-linecap="square" />
+  <path d="M134 106V64" stroke="#F5F5F5" stroke-width="10" stroke-linecap="square" />
+  <text
+    x="109"
+    y="138"
+    fill="#F5F5F5"
+    font-family="Avenir Next, Trebuchet MS, Arial, sans-serif"
+    font-size="66"
+    font-weight="500"
+    letter-spacing="-1.8"
+  >
+    Jee
+  </text>
+  <text
+    x="250"
+    y="112"
+    fill="#F5F5F5"
+    font-family="Avenir Next, Trebuchet MS, Arial, sans-serif"
+    font-size="44"
+    font-weight="500"
+    letter-spacing="-1.2"
+  >
+    t
+  </text>
+  <text
+    x="274"
+    y="138"
+    fill="#F2B632"
+    font-family="Avenir Next, Trebuchet MS, Arial, sans-serif"
+    font-size="66"
+    font-weight="500"
+    letter-spacing="-1.8"
+  >
+    Win
+  </text>
+</svg>
