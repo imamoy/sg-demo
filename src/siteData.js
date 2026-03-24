@@ -1,7 +1,7 @@
 export const STYLE_OPTIONS = [
   {
     id: "style1",
-    label: "Style 1",
+    label: "Style 1 / Layout 1",
     themeClass: "theme-amber",
     layout: "sidebar",
     headerHeightClassName: "h-[60px]",
@@ -24,7 +24,7 @@ export const STYLE_OPTIONS = [
   },
   {
     id: "style2",
-    label: "Style 2",
+    label: "Style 2 / Layout 1",
     themeClass: "theme-cobalt",
     layout: "sidebar",
     headerHeightClassName: "h-[60px]",
@@ -47,7 +47,7 @@ export const STYLE_OPTIONS = [
   },
   {
     id: "style-h",
-    label: "Style 3",
+    label: "Style 1 / Layout 2",
     themeClass: "theme-amber",
     layout: "hero",
     headerHeightClassName: "h-[60px]",
@@ -71,7 +71,7 @@ export const STYLE_OPTIONS = [
   },
   {
     id: "style-2-h",
-    label: "Style 4",
+    label: "Style 2 / Layout 2",
     themeClass: "theme-cobalt",
     layout: "hero",
     headerHeightClassName: "h-[60px]",

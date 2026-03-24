@@ -4,15 +4,31 @@ import { HeroLayout, SidebarLayout } from "./components/StyleLayouts";
 import { HERO_SLIDES, STYLE_OPTIONS } from "./siteData";
 
 const AUTO_PLAY_MS = 5000;
+const COLOR_MODE_STORAGE_KEY = "sg-color-mode";
 
 function getStyleById(styleId) {
   return STYLE_OPTIONS.find((option) => option.id === styleId) ?? STYLE_OPTIONS[0];
+}
+
+function getInitialColorMode() {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+
+  const savedMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY);
+
+  if (savedMode === "light" || savedMode === "dark") {
+    return savedMode;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 
 export default function App() {
   const [activeStyleId, setActiveStyleId] = useState(STYLE_OPTIONS[0].id);
   const [isDropdownOpen, setIsDropdownOpen] = useState(STYLE_OPTIONS[0].dropdownOpenByDefault);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [colorMode, setColorMode] = useState(getInitialColorMode);
 
   const activeStyle = getStyleById(activeStyleId);
   const activeSlide = HERO_SLIDES[currentSlide];
@@ -24,6 +40,11 @@ export default function App() {
 
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.colorMode = colorMode;
+    window.localStorage.setItem(COLOR_MODE_STORAGE_KEY, colorMode);
+  }, [colorMode]);
 
   function handleStyleSelect(styleId) {
     const nextStyle = getStyleById(styleId);
@@ -48,6 +69,12 @@ export default function App() {
     setCurrentSlide(index);
   }
 
+  function handleColorModeToggle() {
+    startTransition(() => {
+      setColorMode((currentMode) => (currentMode === "dark" ? "light" : "dark"));
+    });
+  }
+
   const layoutProps = {
     activeStyle,
     activeSlide,
@@ -60,11 +87,13 @@ export default function App() {
   };
 
   return (
-    <div className={`theme-shell ${activeStyle.themeClass}`}>
+    <div className={`theme-shell ${activeStyle.themeClass} theme-mode-${colorMode}`}>
       <div className="page-frame">
         <Header
           activeStyle={activeStyle}
+          colorMode={colorMode}
           isDropdownOpen={isDropdownOpen}
+          onColorModeToggle={handleColorModeToggle}
           onDropdownToggle={() => setIsDropdownOpen((open) => !open)}
           onStyleSelect={handleStyleSelect}
         />

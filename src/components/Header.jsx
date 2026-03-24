@@ -1,13 +1,28 @@
-import { ChevronDown, Languages, LayoutGrid, UserRound } from "lucide-react";
-import jeetWinLogo from "../assets/logo.png";
+import {
+  ChevronDown,
+  Languages,
+  LayoutGrid,
+  MoonStar,
+  SunMedium,
+  UserRound,
+} from "lucide-react";
+import logoLight from "../assets/logo-light.svg";
+import logoDark from "../assets/logo-dark.svg";
 import { NAV_ITEMS, STYLE_OPTIONS } from "../siteData";
 
 export default function Header({
   activeStyle,
+  colorMode,
   isDropdownOpen,
+  onColorModeToggle,
   onDropdownToggle,
   onStyleSelect,
 }) {
+  const ColorModeIcon = colorMode === "dark" ? SunMedium : MoonStar;
+  const colorModeLabel =
+    colorMode === "dark" ? "切換為淺色模式" : "切換為深色模式";
+  const colorModeLogo = colorMode === "dark" ? logoDark : logoLight;
+
   return (
     <header
       className={`header-shell ${activeStyle.headerShellClassName ?? ""} ${activeStyle.headerHeightClassName} ${activeStyle.headerPaddingClassName}`}
@@ -15,7 +30,11 @@ export default function Header({
       <div className="header-inner">
         <div className="header-side-left">
           <div className="brand-mark-shell">
-            <img className="brand-logo-image" src={jeetWinLogo} alt="JeetWin" />
+            <img
+              className="brand-logo-image"
+              src={colorModeLogo}
+              alt="JeetWin"
+            />
           </div>
         </div>
 
@@ -30,15 +49,23 @@ export default function Header({
             >
               <span>{item}</span>
               {index === 0 ? (
-                <span className={`nav-underline ${activeStyle.navUnderlineWidthClassName}`} />
+                <span
+                  className={`nav-underline ${activeStyle.navUnderlineWidthClassName}`}
+                />
               ) : null}
             </button>
           ))}
         </nav>
 
-        <div className={`header-side-right ${activeStyle.headerRightGapClassName}`}>
+        <div
+          className={`header-side-right ${activeStyle.headerRightGapClassName}`}
+        >
           <div className="relative">
-            <button className="switcher-button" type="button" onClick={onDropdownToggle}>
+            <button
+              className="switcher-button"
+              type="button"
+              onClick={onDropdownToggle}
+            >
               <span className="switcher-button-label">
                 <LayoutGrid className="h-4 w-4 text-[var(--accent)]" />
                 <span>{activeStyle.label}</span>
@@ -56,7 +83,9 @@ export default function Header({
                   <button
                     key={option.id}
                     className={`switcher-option ${
-                      option.id === activeStyle.id ? "switcher-option-active" : ""
+                      option.id === activeStyle.id
+                        ? "switcher-option-active"
+                        : ""
                     }`}
                     type="button"
                     onClick={() => onStyleSelect(option.id)}
@@ -70,6 +99,16 @@ export default function Header({
               </div>
             ) : null}
           </div>
+
+          <button
+            className="theme-toggle-button"
+            type="button"
+            aria-label={colorModeLabel}
+            title={colorModeLabel}
+            onClick={onColorModeToggle}
+          >
+            <ColorModeIcon className="h-4 w-4" />
+          </button>
 
           <div className="lang-chip">
             <Languages className="h-4 w-4" />
