@@ -43,9 +43,6 @@ function SearchRow({ activeStyle, variant }) {
           <Search className="h-4 w-4 text-[var(--ink-soft)]" />
           <span>搜尋活動...</span>
         </div>
-        <button className="search-filter-chip" type="button" aria-label="Filter">
-          <SlidersHorizontal className="h-4 w-4" />
-        </button>
       </div>
     );
   }
