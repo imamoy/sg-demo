@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Banknote,
   Bitcoin,
@@ -118,6 +119,47 @@ function Sidebar() {
   );
 }
 
+function MobileCategoryTabs() {
+  const [activeId, setActiveId] = useState("all");
+  const activeItem = SIDEBAR_ITEMS.find((item) => item.id === activeId);
+  const hasSubItems = activeItem?.subItems?.length > 0;
+
+  return (
+    <div className="mobile-cat-wrapper">
+      <div className="mobile-cat-tabs-shell">
+        {SIDEBAR_ITEMS.map((item) => {
+          const Icon = SIDEBAR_ICONS[item.icon];
+          const isActive = item.id === activeId;
+          return (
+            <button
+              key={item.id}
+              className={`mobile-cat-tab ${isActive ? "mobile-cat-tab-active" : ""} ${item.tone === "signal" ? "mobile-cat-tab-signal" : ""}`}
+              type="button"
+              onClick={() => setActiveId(item.id)}
+            >
+              <Icon className="mobile-cat-tab-icon" strokeWidth={1.9} />
+              <span className="mobile-cat-tab-label">{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
+      {hasSubItems && (
+        <div className="mobile-cat-sub-row">
+          {activeItem.subItems.map((sub, i) => (
+            <button
+              key={sub}
+              className={`mobile-cat-sub-item ${i === 0 ? "mobile-cat-sub-item-active" : ""}`}
+              type="button"
+            >
+              {sub}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CardGrid({ activeStyle }) {
   return (
     <div className={`card-grid ${activeStyle.gridClassName}`}>
@@ -137,7 +179,9 @@ export function SidebarLayout({
   onSlideSelect,
 }) {
   return (
-    <div className={`site-body-grid ${activeStyle.sidebarGridClassName ?? ""}`}>
+    <>
+      <MobileCategoryTabs />
+      <div className={`site-body-grid ${activeStyle.sidebarGridClassName ?? ""}`}>
       <Sidebar />
       <main className="sidebar-main">
         <div className={`sidebar-content-stack ${activeStyle.sidebarStackClassName ?? "gap-6"}`}>
@@ -157,6 +201,7 @@ export function SidebarLayout({
         </div>
       </main>
     </div>
+    </>
   );
 }
 
@@ -191,6 +236,8 @@ export function HeroLayout({
           />
         </div>
       </div>
+
+      <MobileCategoryTabs />
 
       <div className={`hero-controls-row ${contentWidthClassName}`}>
         <HeroTabs toneClassName={activeStyle.tabsTone} />

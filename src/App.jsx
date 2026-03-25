@@ -1,4 +1,5 @@
 import { startTransition, useEffect, useState } from "react";
+import BottomNav from "./components/BottomNav";
 import Header from "./components/Header";
 import { HeroLayout, SidebarLayout } from "./components/StyleLayouts";
 import { HERO_SLIDES, STYLE_OPTIONS } from "./siteData";
@@ -104,6 +105,7 @@ export default function App() {
           <HeroLayout {...layoutProps} />
         )}
       </div>
+      <BottomNav />
     </div>
   );
 }
