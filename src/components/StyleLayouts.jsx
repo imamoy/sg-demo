@@ -15,8 +15,8 @@ import {
   Zap,
   ChartColumnIncreasing,
 } from "lucide-react";
-import { HERO_TABS, PREDICTION_CARDS, SIDEBAR_ITEMS } from "../siteData";
-import { RibbonHeroCarousel, SidebarHero } from "./HeroCarousel";
+import { PREDICTION_CARDS, SIDEBAR_ITEMS } from "../siteData";
+import { SidebarHero } from "./HeroCarousel";
 import PredictionCard from "./PredictionCard";
 
 const SIDEBAR_ICONS = {
@@ -34,35 +34,21 @@ const SIDEBAR_ICONS = {
   zap: Zap,
 };
 
-function SearchRow({ activeStyle, variant }) {
+function SearchRow({ activeStyle }) {
   const searchHeightClassName = activeStyle.searchFieldHeightClassName ?? "h-10";
 
-  if (variant === "filter") {
-    return (
-      <div className="search-row-shell">
-        <div className={`search-field-shell ${searchHeightClassName}`}>
-          <Search className="h-4 w-4 text-[var(--ink-soft)]" />
-          <span>搜尋活動...</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={variant === "compact" ? "compact-search-shell" : "search-row-shell"}>
+    <div className="search-row-shell">
       <div className={`search-field-shell ${searchHeightClassName}`}>
         <Search className="h-4 w-4 text-[var(--ink-soft)]" />
-        <span>{variant === "compact" ? "搜尋活動..." : "搜尋活動..."}</span>
+        <span>搜尋活動...</span>
       </div>
     </div>
   );
 }
 
-function StatusDots({ variant, currentSlide, onSlideSelect }) {
-  const dotClassNames =
-    variant === "hero"
-      ? ["w-[30px]", "w-[30px]", "w-[30px]"]
-      : ["w-[36px]", "w-[24px]", "w-[24px]"];
+function StatusDots({ currentSlide, onSlideSelect }) {
+  const dotClassNames = ["w-[36px]", "w-[24px]", "w-[24px]"];
 
   return (
     <div className="flex items-center justify-center gap-[10px]">
@@ -74,18 +60,6 @@ function StatusDots({ variant, currentSlide, onSlideSelect }) {
           aria-label={`Go to slide ${index + 1}`}
           onClick={() => onSlideSelect(index)}
         />
-      ))}
-    </div>
-  );
-}
-
-function HeroTabs({ toneClassName }) {
-  return (
-    <div className={`hero-tabs-shell ${toneClassName}`}>
-      {HERO_TABS.map((tab, index) => (
-        <button key={tab} className={`hero-tab ${index === 0 ? "hero-tab-active" : ""}`} type="button">
-          {tab}
-        </button>
       ))}
     </div>
   );
@@ -174,79 +148,25 @@ export function SidebarLayout({
   activeStyle,
   activeSlide,
   currentSlide,
-  onNext,
-  onPrevious,
   onSlideSelect,
 }) {
   return (
     <>
       <MobileCategoryTabs />
       <div className={`site-body-grid ${activeStyle.sidebarGridClassName ?? ""}`}>
-      <Sidebar />
-      <main className="sidebar-main">
-        <div className={`sidebar-content-stack ${activeStyle.sidebarStackClassName ?? "gap-6"}`}>
-          <SidebarHero
-            activeSlide={activeSlide}
-            heroClassName={activeStyle.heroClassName}
-            onNext={onNext}
-            onPrevious={onPrevious}
-          />
-          <StatusDots
-            currentSlide={currentSlide}
-            onSlideSelect={onSlideSelect}
-            variant={activeStyle.dotsVariant}
-          />
-          <SearchRow activeStyle={activeStyle} variant={activeStyle.searchVariant} />
-          <CardGrid activeStyle={activeStyle} />
-        </div>
-      </main>
-    </div>
+        <Sidebar />
+        <main className="sidebar-main">
+          <div className={`sidebar-content-stack ${activeStyle.sidebarStackClassName ?? "gap-6"}`}>
+            <SidebarHero
+              activeSlide={activeSlide}
+              heroClassName={activeStyle.heroClassName}
+            />
+            <StatusDots currentSlide={currentSlide} onSlideSelect={onSlideSelect} />
+            <SearchRow activeStyle={activeStyle} />
+            <CardGrid activeStyle={activeStyle} />
+          </div>
+        </main>
+      </div>
     </>
-  );
-}
-
-export function HeroLayout({
-  activeStyle,
-  currentSlide,
-  onNext,
-  onPrevious,
-  onSlideSelect,
-  slides,
-}) {
-  const heroWidthClassName = activeStyle.heroWidthClassName ?? "";
-  const contentWidthClassName = activeStyle.contentWidthClassName ?? "";
-  const heroLayoutClassName = activeStyle.heroLayoutClassName ?? "";
-
-  return (
-    <main className={`hero-main ${heroLayoutClassName}`}>
-      <div className={`hero-banner-shell ${heroWidthClassName}`}>
-        <RibbonHeroCarousel
-          currentSlide={currentSlide}
-          heroClassName={`${activeStyle.heroClassName} ${heroWidthClassName}`}
-          onNext={onNext}
-          onPrevious={onPrevious}
-          slides={slides}
-        />
-
-        <div className={`hero-dots-shell ${heroWidthClassName}`}>
-          <StatusDots
-            currentSlide={currentSlide}
-            onSlideSelect={onSlideSelect}
-            variant={activeStyle.dotsVariant}
-          />
-        </div>
-      </div>
-
-      <MobileCategoryTabs />
-
-      <div className={`hero-controls-row ${contentWidthClassName}`}>
-        <HeroTabs toneClassName={activeStyle.tabsTone} />
-        <SearchRow activeStyle={activeStyle} variant={activeStyle.searchVariant} />
-      </div>
-
-      <div className={`hero-cards-shell ${contentWidthClassName}`}>
-        <CardGrid activeStyle={activeStyle} />
-      </div>
-    </main>
   );
 }
